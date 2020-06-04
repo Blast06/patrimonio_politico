@@ -30,8 +30,9 @@ class ItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
-                child: Image(
-                  image: AssetImage('assets/imgs/gonzalo.jpg'),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/imgs/loading.gif'),
+                  image: AssetImage('assets/imgs/$_ItemImage'),
                   fit: BoxFit.cover,
                 )),
           ),

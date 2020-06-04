@@ -27,7 +27,7 @@ class SingleItemPage extends StatelessWidget {
               child: FittedBox(
                 child: Container(
                   width: one_percent_screen_width * 100,
-                  height: one_percent_screen_height * 60,
+                  height: one_percent_screen_height * 45,
                   child: Image.asset(
                     'assets/imgs/${politico.itemImage}',
                     fit: BoxFit.cover,
@@ -35,17 +35,17 @@ class SingleItemPage extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-                top: 45 * one_percent_screen_height,
-                child: FittedBox(
-                  child: Container(
-                    width: one_percent_screen_width * 100,
-                    height: one_percent_screen_height * 70,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(55)),
-                        color: Colors.white),
-                  ),
-                )),
+//            Positioned(
+//                top: 45 * one_percent_screen_height,
+//                child: FittedBox(
+//                  child: Container(
+//                    width: one_percent_screen_width * 100,
+//                    height: one_percent_screen_height * 70,
+//                    decoration: BoxDecoration(
+//                        borderRadius: BorderRadius.all(Radius.circular(55)),
+//                        color: Colors.red),
+//                  ),
+//                )),
             Positioned(
               top: 46 * one_percent_screen_height,
               left: 35 * one_percent_screen_width,
@@ -80,11 +80,11 @@ class SingleItemPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 60 * one_percent_screen_height,
-              left: 1 * one_percent_screen_width,
+              top: 59 * one_percent_screen_height,
+              left: -20,
               child: Container(
-                width: one_percent_screen_width * 100,
-                height: one_percent_screen_height * 0.3,
+                width: one_percent_screen_width * 120,
+                height: one_percent_screen_height * 0.1,
 //                color: Colors.red,
                 child: Divider(
                   color: Colors.black,
@@ -100,12 +100,13 @@ class SingleItemPage extends StatelessWidget {
               left: 5 * one_percent_screen_width,
               child: Center(
                 child: Container(
+//                  margin: EdgeInsets.all(20.0),
                   width: one_percent_screen_width * 90,
-                  height: one_percent_screen_height * 50,
+                  height: one_percent_screen_height * 40,
                   child: GridView.count(
                     childAspectRatio: 0.9,
-                    crossAxisCount: 3,
-                    crossAxisSpacing: one_percent_screen_height * 1,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: one_percent_screen_height,
                     children: List.generate(gastosLista.length, (index){
                       return MiniCard(
                           gastosLista[index].title,

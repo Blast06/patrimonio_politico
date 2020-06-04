@@ -12,8 +12,14 @@ class MiniCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double one_percent_screen_height =
-        MediaQuery.of(context).size.height * 0.01;
-    double one_percent_screen_width = MediaQuery.of(context).size.width * 0.01;
+        MediaQuery
+            .of(context)
+            .size
+            .height * 0.01;
+    double one_percent_screen_width = MediaQuery
+        .of(context)
+        .size
+        .width * 0.01;
     return Container(
       margin: EdgeInsets.all(4.0),
       // uso el width para asegurarme de que sea cuadrado
@@ -26,26 +32,26 @@ class MiniCard extends StatelessWidget {
         color: _ContainerColor,
       ),
       child: Column(
-//        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          Center(
+              child: OverflowBox(
+                child: FadeInImage(
+                  height: 100,
+                  width: one_percent_screen_width * 40,
+                  image: NetworkImage(_image),
+                  placeholder: AssetImage('assets/imgs/loading.gif'),
+
+                ),
+              )
+          ),
           Center(
             child: Text(
               _title,
               textAlign: TextAlign.center,
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+              TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
           ),
-          Center(
-              child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: FadeInImage(
-              height: 80,
-              width: 100,
-              image: NetworkImage(_image),
-              placeholder: AssetImage('assets/imgs/gonzalo.jpg'),
-            ),
-          )),
         ],
       ),
     );

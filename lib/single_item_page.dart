@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
 import 'package:patrimoniopolitico/widgets/mini_card.dart';
@@ -28,8 +29,9 @@ class SingleItemPage extends StatelessWidget {
                 child: Container(
                   width: one_percent_screen_width * 100,
                   height: one_percent_screen_height * 45,
-                  child: Image.asset(
-                    'assets/imgs/${politico.itemImage}',
+                  child: FadeInImage(
+                    placeholder: AssetImage('assets/imgs/loading.gif'),
+                    image: NetworkImage(politico.itemImage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -68,17 +70,24 @@ class SingleItemPage extends StatelessWidget {
 //                    fontWeight: FontWeight.normal),
 //              ),
 //            ),
+
             Positioned(
               top: 50 * one_percent_screen_height,
-              left: 16 * one_percent_screen_width,
-              child: Text(
-                politico.patrimonio,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold),
+              left: 1 * one_percent_screen_width,
+              child: Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 50 ),
+                child: AutoSizeText(
+                  politico.patrimonio.toString(),
+                  maxLines: 1,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ),
+
             Positioned(
               top: 59 * one_percent_screen_height,
               left: -20,
@@ -96,34 +105,30 @@ class SingleItemPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 59 * one_percent_screen_height,
-              left: 5 * one_percent_screen_width,
-              child: Center(
-                child: Container(
+                top: 59 * one_percent_screen_height,
+                left: 5 * one_percent_screen_width,
+                child: Center(
+                  child: Container(
 //                  margin: EdgeInsets.all(20.0),
-                  width: one_percent_screen_width * 90,
-                  height: one_percent_screen_height * 40,
-                  child: GridView.count(
-                    childAspectRatio: 0.9,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: one_percent_screen_height,
-                    children: List.generate(gastosLista.length, (index){
-                      return MiniCard(
-                          gastosLista[index].title,
-                          gastosLista[index].image,
-                          gastosLista[index].price,
-                          Colors.amberAccent
-                      );
-                    }),
+                    width: one_percent_screen_width * 90,
+                    height: one_percent_screen_height * 40,
+                    child: GridView.count(
+                      childAspectRatio: 0.9,
+                      crossAxisCount: 2,
+                      crossAxisSpacing: one_percent_screen_height,
+                      children: List.generate(gastosLista.length, (index) {
+                        return MiniCard(
+                            gastosLista[index].title,
+                            gastosLista[index].image,
+                            gastosLista[index].price,
+                            Colors.amberAccent);
+                      }),
+                    ),
                   ),
-                ),
-              )
-            )
+                ))
           ],
         ),
       ),
     );
   }
-
 }
-

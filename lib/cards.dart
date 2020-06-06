@@ -7,7 +7,7 @@ import 'models/politico_model.dart';
 class ItemCard extends StatelessWidget {
   String _ItemImage;
   String _ItemName;
-  String _Patrimonio;
+  int _Patrimonio;
   String _Partido;
   String _Cargo;
   int _ImageNumber;
@@ -32,7 +32,7 @@ class ItemCard extends StatelessWidget {
                 ),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/imgs/loading.gif'),
-                  image: AssetImage('assets/imgs/$_ItemImage'),
+                  image: NetworkImage(_ItemImage),
                   fit: BoxFit.cover,
                 )),
           ),
@@ -80,7 +80,7 @@ class ItemCard extends StatelessWidget {
             top: one_percent_screen_height * 28,
             left: one_percent_screen_width * 4,
             child: Text(
-              _Patrimonio,
+              _Patrimonio.toString(),
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Colors.white,

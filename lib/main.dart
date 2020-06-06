@@ -107,17 +107,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
-            Positioned(
-              top: 19 * one_percent_screen_height,
-              left: 5 * one_percent_screen_width,
-              child: Text(
-                'Elige el politico que quieras y empieza a gastar!',
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Color.fromRGBO(0, 0, 0, 0.3),
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
+//            Positioned(
+//              top: 19 * one_percent_screen_height,
+//              left: 5 * one_percent_screen_width,
+//              child: Text(
+//                'Elige el politico que quieras y empieza a gastar!',
+//                style: TextStyle(
+//                    fontSize: 12,
+//                    color: Color.fromRGBO(0, 0, 0, 0.3),
+//                    fontWeight: FontWeight.w600),
+//              ),
+//            ),
             Positioned(
               top: 20 * one_percent_screen_height,
               left: 4 * one_percent_screen_width,
@@ -134,8 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
 //              child: Icon(Icons.location_on),
 //            ),
             Positioned(
-              top: 26 * one_percent_screen_height,
-              left: 5 * one_percent_screen_width,
+              top: 24 * one_percent_screen_height,
+              left: 85 * one_percent_screen_width,
               child: Text(
                 'Tuya',
                 style: TextStyle(

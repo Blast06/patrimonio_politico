@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
 import 'package:patrimoniopolitico/widgets/mini_card.dart';
 
-import 'models/politico_model.dart';
+import '../models/politico_model.dart';
 
 class SingleItemPage extends StatelessWidget {
   @override

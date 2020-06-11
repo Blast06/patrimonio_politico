@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patrimoniopolitico/single_item_page.dart';
+import 'package:patrimoniopolitico/pages/single_item_page.dart';
 
 import 'models/politico_model.dart';
 

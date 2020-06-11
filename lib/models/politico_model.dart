@@ -20,7 +20,7 @@ class Politico {
     this.id,
     this.itemImage,
     this.itemName,
-    this.patrimonio,
+    this.patrimonio = 10,
     this.partido,
     this.cargo,
     this.imageNumber,
@@ -48,7 +48,7 @@ class Politico {
         "itemName": itemName,
         "patrimonio": patrimonio,
         "partido": partido,
-        "carto": cargo,
+        "cargo": cargo,
         "show" : show
       };
 

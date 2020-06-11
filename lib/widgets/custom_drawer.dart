@@ -30,9 +30,9 @@ class CustomDrawer extends StatelessWidget {
             onTap: () => Navigator.pushReplacementNamed(context, 'categories'),
           ),ListTile(
             leading: Icon(Icons.party_mode, color: Colors.blueGrey,),
-            title: Text('Upload group'),
+            title: Text('Agregar politico'),
             onTap: (){
-              Navigator.pushReplacementNamed(context, 'upload_group');
+              Navigator.pushReplacementNamed(context, 'add_politico');
             },
           ),ListTile(
             leading: Icon(Icons.people, color: Colors.blueGrey,),

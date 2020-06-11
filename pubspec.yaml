@@ -27,6 +27,10 @@ dependencies:
   auto_size_text: ^2.1.0
   rxdart: ^0.22.0
   http:
+  image_picker:
+  firebase_core:
+  firebase_storage:
+  image_cropper:
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +53,7 @@ flutter:
   - assets/imgs/gonzalo.jpg
   - assets/imgs/drawer.jpg
   - assets/imgs/loading.gif
+  - assets/imgs/no_image_placeholder.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

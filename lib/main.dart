@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patrimoniopolitico/buttons.dart';
 import 'package:patrimoniopolitico/routes/routes.dart';
 import 'package:patrimoniopolitico/widgets/custom_drawer.dart';
+import 'package:patrimoniopolitico/provider/politicos_provider.dart';
 
 import 'cards.dart';
 import 'models/politico_model.dart';
@@ -9,12 +10,13 @@ import 'models/politico_model.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+final politicosProvider = new PoliticosProvider();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Polit Money',
-      initialRoute: '/',
+      title: 'Politico Money',
+      initialRoute: 'home',
       routes: getApplicationRoutes(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -193,8 +195,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         index
                     );
                   }),
-
-                ),
               ),
             )
           ],

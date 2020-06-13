@@ -157,16 +157,16 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
     );
   }
 
-  void _submit() {
+  void _submit() async{
     // si el form no es valido
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
 
     if (politico.id == null) {
-      politico.itemImage = _subirImagen(imagen, politico.itemName).toString();
-      print(politico.itemImage);
+      politico.itemImage = await _subirImagen(imagen, politico.itemName);
       politicoProvider.agregarPolitico(politico);
+
       mostrarSnackbar('Creado exitosamente');
       print("prueba");
     } else {
@@ -224,24 +224,46 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
 //    return imageUri;
 //  }
 
+  //TODO IMPLEMENTAR UN LOADING SPINNER al presionar
   Future _subirImagen(File imagen, String imageName) async {
+
     fb.StorageReference storageReference = fb.FirebaseStorage.instance
         .ref()
         .child('politicos/$imageName${DateTime.now()}');
-
     fb.StorageUploadTask uploadTask = storageReference.putFile(imagen);
+
+    if(uploadTask.isInProgress) {
+      return StreamBuilder(
+        stream: uploadTask.events,
+        builder: (context, snapshot){
+          var event = snapshot?.data?.snapshot;
+          double progressPercent = event != null
+              ? event.bytesTransferred / event.totalByteCount
+              : 0;
+          return Column(
+            children: <Widget>[
+              if(uploadTask.isComplete)
+                Text('Terminado'),
+              LinearProgressIndicator(value: progressPercent,)
+            ],
+          );
+        },
+      );
+    }
     await uploadTask.onComplete;
+
     print('File uploaded');
-//    Uri imageUri = await storageReference.getDownloadURL();
-//    uploadImageUrl = imageUri.toString();
-    storageReference.getDownloadURL().then((fileUrl) {
-      setState(() {
-        uploadImageUrl = fileUrl;
-        politico.itemImage = uploadImageUrl;
-        print("prueba de $uploadImageUrl");
-        //TODO PROBAR SI SE GUARDA LA URL DE LA IMAGEN EN EL ATRIBUTO ITEMIMAGE
-      });
-    });
-    print(uploadTask);
+
+//    storageReference.getDownloadURL().then((fileUrl) {
+//      setState(() {
+//        uploadImageUrl = fileUrl;
+//        print("prueba de url $uploadImageUrl");
+//        //TODO PROBAR SI SE GUARDA LA URL DE LA IMAGEN EN EL ATRIBUTO ITEMIMAGE
+//      });
+//    });
+
+    uploadImageUrl = await storageReference.getDownloadURL();
+
+    return uploadImageUrl;
   }
 }

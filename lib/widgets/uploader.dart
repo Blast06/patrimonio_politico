@@ -32,7 +32,7 @@ class _UploaderState extends State<Uploader> {
   Widget build(BuildContext context) {
     if(_uploadTask != null){
 
-      return StreamBuilder<StorageTaskEvent>(
+       StreamBuilder<StorageTaskEvent>(
         stream: _uploadTask.events,
         builder: (context,snapshot){
           var event = snapshot?.data?.snapshot;

@@ -10,7 +10,6 @@ import 'models/politico_model.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-final politicosProvider = new PoliticosProvider();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -36,6 +35,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static final politicosProvider = new PoliticosProvider();
+  final cargarPoliticos = politicosProvider.cargarPoliticos();
+
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   int _counter = 0;
   List<int> ActiveButton = [1, 0, 0, 0];
@@ -43,11 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
   //TODO: PREPARAR ESATA DATA PARA CONVERTIRLA DESDE FIREBASE
 //  List<Politico> Politicos = new Politico(itemImage, itemName, patrimonio, partido, cargo, imageNumber)
 
+  @override
+  void initState() {
+    // TODO: implement initState
+//    final List<Politico> politicos = new List();
+    final cargarPoliticos = politicosProvider.cargarPoliticos();
+
+    super.initState();
+  }
 
   void changeToValue(int value) {
     setState(() {
-      for (int current_value = 0; current_value <
-          ActiveButton.length; current_value++) {
+      for (int current_value = 0;
+          current_value < ActiveButton.length;
+          current_value++) {
         if (current_value == value) {
           ActiveButton[current_value] = 1;
         } else {
@@ -69,18 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     double one_percent_screen_height =
-        MediaQuery
-            .of(context)
-            .size
-            .height * 0.01;
-    double one_percent_screen_width = MediaQuery
-        .of(context)
-        .size
-        .width * 0.01;
+        MediaQuery.of(context).size.height * 0.01;
+    double one_percent_screen_width = MediaQuery.of(context).size.width * 0.01;
 
     return Scaffold(
       key: _drawerKey,
-      drawer: CustomDrawer(), //TODO: AGERGAR DRAWER(TOMAR ABOUT,POLITICAS Y DEMAS DE EL DRAWER DE WHATSGROUP
+      drawer: CustomDrawer(),
+      //TODO: AGERGAR DRAWER(TOMAR ABOUT,POLITICAS Y DEMAS DE EL DRAWER DE WHATSGROUP
       body: Center(
         child: Stack(
           children: <Widget>[
@@ -93,15 +99,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                     color: peach,
                     borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(55))),
+                        BorderRadius.only(bottomLeft: Radius.circular(55))),
               ),
             ),
             Positioned(
               top: 10 * one_percent_screen_height,
               left: 4 * one_percent_screen_width,
               child: IconButton(
-                iconSize: one_percent_screen_width * 10 ,
-                icon:Icon(Icons.menu),
+                iconSize: one_percent_screen_width * 10,
+                icon: Icon(Icons.menu),
 //                size: one_percent_screen_width * 10,
                 color: Color.fromRGBO(0, 0, 0, 0.3),
                 onPressed: () {
@@ -125,7 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
               left: 4 * one_percent_screen_width,
               child: Container(
                 width: 90 * one_percent_screen_width,
-                child: Text('Gasta la fortuna como si fuera',
+                child: Text(
+                  'Gasta la fortuna como si fuera',
                   style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
                 ),
               ),
@@ -167,7 +174,8 @@ class _MyHomePageState extends State<MyHomePage> {
               one_percent_screen_width: one_percent_screen_width,
               horizontal_padding: 50.0,
               onButtonSelected: () => changeToValue(2),
-            ), Buttons(
+            ),
+            Buttons(
               button_text: "FP",
               active: ActiveButton[3],
               one_percent_screen_height: one_percent_screen_height,
@@ -180,26 +188,36 @@ class _MyHomePageState extends State<MyHomePage> {
               left: one_percent_screen_width * 5,
               width: one_percent_screen_width * 90,
               height: one_percent_screen_height * 60,
-              child: Container(
-                child: GridView.count(
-                  childAspectRatio: 0.6,
-                  crossAxisCount: 2,
-                  crossAxisSpacing: one_percent_screen_height * 2,
-                  children: List.generate(politicosLista.length, (index) {
-                    return ItemCard(
-                        politicosLista[index].itemImage,
-                        politicosLista[index].itemName,
-                        politicosLista[index].patrimonio,
-                        politicosLista[index].partido,
-                        politicosLista[index].cargo,
-                        index
-                    );
-                  }),
-              ),
+              child: _crearListado(),
             )
           ],
         ),
       ),
     );
+  }
+
+  _crearListado() {
+    return FutureBuilder(
+      future: cargarPoliticos,
+      builder: (BuildContext context, AsyncSnapshot<List<Politico>> snapshot) {
+        if (snapshot.hasData) {
+          final politicos = snapshot.data;
+          return GridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 4,
+            children: List.generate(politicos.length, (index) {
+              return _mostrarPoliticoCard(politicos[index]);
+            }),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  Widget _mostrarPoliticoCard(Politico politico) {
+    return ItemCard(politico.itemImage, politico.itemName, politico.patrimonio,
+        politico.partido, politico.cargo);
   }
 }

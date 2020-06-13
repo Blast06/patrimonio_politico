@@ -10,10 +10,10 @@ class ItemCard extends StatelessWidget {
   int _Patrimonio;
   String _Partido;
   String _Cargo;
-  int _ImageNumber;
+//  int _ImageNumber;
 
   ItemCard(this._ItemImage, this._ItemName, this._Patrimonio, this._Partido,
-      this._Cargo, this._ImageNumber);
+      this._Cargo);
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +57,11 @@ class ItemCard extends StatelessWidget {
                       Color.fromRGBO(0, 0, 0, 0.5),
                       Color.fromRGBO(0, 0, 0, 0.6)
                     ]))),
-            child: FlatButton(
-              child: Container(),
-              onPressed: () => Navigator.pushNamed(context, 'single_item',
-                  arguments: politicosLista[_ImageNumber]),
-            ),
+//            child: FlatButton(
+//              child: Container(),
+//              onPressed: () => Navigator.pushNamed(context, 'single_item',
+//                  arguments: politicosLista[_ImageNumber]),
+//            ),
 
 //            child: Widget(),
           ),

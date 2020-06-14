@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:patrimoniopolitico/models/politico_model.dart';
 import 'package:patrimoniopolitico/utils/utils.dart' as utils;
 import 'package:patrimoniopolitico/provider/politicos_provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 
 //import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase_storage/firebase_storage.dart' as fb;
@@ -144,9 +146,8 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
   Widget _crearBtn() {
     String txt = 'Agregar';
     if (politico.id != null) {
-      txt = 'Update';
+      txt = 'Actualizar';
     }
-
     return RaisedButton.icon(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       color: Colors.deepPurple,
@@ -154,11 +155,13 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
       icon: Icon(Icons.save),
       label: Text(txt),
       onPressed: _submit,
+
     );
   }
 
+  //TODO: mandar false siempre el show/disponible
   void _submit() async{
-    // si el form no es valido
+    // si el form no es valido retorna alertas en los textfield con los hintErrors
     if (!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
@@ -166,23 +169,36 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
     if (politico.id == null) {
       politico.itemImage = await _subirImagen(imagen, politico.itemName);
       politicoProvider.agregarPolitico(politico);
-
-      mostrarSnackbar('Creado exitosamente');
-      print("prueba");
+      Navigator.pushReplacementNamed(context, 'home');
+//      mostrarSnackbar('Creado exitosamente');
+      setState(() {
+      });
+      formKey.currentState.reset();
     } else {
 //      politicoProvider.editarProducto(politico);
-      mostrarSnackbar('Editado exitosamente');
+//      mostrarSnackbar('Editado exitosamente');
+      formKey.currentState.reset();
     }
 //    Navigator.pushReplacementNamed(context, 'home');
   }
 
-  void mostrarSnackbar(String msj) {
-    final snackbar = SnackBar(
-      content: Text(msj),
-      duration: Duration(milliseconds: 1500),
-    );
-    scaffoldKey.currentState.showSnackBar(snackbar);
+  void mostrarSnackbar(String msj, bool show) {
+    scaffoldKey.currentState.showSnackBar(
+        new SnackBar(content:
+        new Row(
+          children: <Widget>[
+            if(show)new CircularProgressIndicator(),
+             new Text("  $msj")
+          ],
+        ),
+        ));
+//    _handleSignIn()
+//        .whenComplete(() =>
+//        Navigator.of(context).pushNamed("/Home")
+//    );
   }
+
+
 
   _mostrarFoto() {
     if (politico.itemImage != null) {
@@ -214,17 +230,7 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
     setState(() {});
   }
 
-  // subir imagen con plugin problematico
-//  Future<Uri> _subirImagen(File imagen, String imageName) async {
-//    fb.StorageReference storageReference = fb.storage().ref('politicos/$imageName${DateTime.now().toString()}');
-//    fb.UploadTaskSnapshot uploadTaskSnapshot = await storageReference.put(imagen).future;
-//
-//    Uri imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
-//    print(imageUri);
-//    return imageUri;
-//  }
 
-  //TODO IMPLEMENTAR UN LOADING SPINNER al presionar
   Future _subirImagen(File imagen, String imageName) async {
 
     fb.StorageReference storageReference = fb.FirebaseStorage.instance
@@ -232,35 +238,17 @@ class _AddPoliticoPageState extends State<AddPoliticoPage> {
         .child('politicos/$imageName${DateTime.now()}');
     fb.StorageUploadTask uploadTask = storageReference.putFile(imagen);
 
-    if(uploadTask.isInProgress) {
-      return StreamBuilder(
-        stream: uploadTask.events,
-        builder: (context, snapshot){
-          var event = snapshot?.data?.snapshot;
-          double progressPercent = event != null
-              ? event.bytesTransferred / event.totalByteCount
-              : 0;
-          return Column(
-            children: <Widget>[
-              if(uploadTask.isComplete)
-                Text('Terminado'),
-              LinearProgressIndicator(value: progressPercent,)
-            ],
-          );
-        },
-      );
+    if( uploadTask.isInProgress){
+      print('is in progress');
     }
-    await uploadTask.onComplete;
+    while(uploadTask.isInProgress){
+      print('ins in progress');
+      mostrarSnackbar("Subiendo..",true);
+      await uploadTask.onComplete;
+      mostrarSnackbar("Listo..",false);
+      print('File uploaded');
 
-    print('File uploaded');
-
-//    storageReference.getDownloadURL().then((fileUrl) {
-//      setState(() {
-//        uploadImageUrl = fileUrl;
-//        print("prueba de url $uploadImageUrl");
-//        //TODO PROBAR SI SE GUARDA LA URL DE LA IMAGEN EN EL ATRIBUTO ITEMIMAGE
-//      });
-//    });
+    }
 
     uploadImageUrl = await storageReference.getDownloadURL();
 

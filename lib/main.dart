@@ -202,11 +202,19 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context, AsyncSnapshot<List<Politico>> snapshot) {
         if (snapshot.hasData) {
           final politicos = snapshot.data;
+          final cantidad = politicos.length;
           return GridView.count(
             crossAxisCount: 2,
-            mainAxisSpacing: 4,
-            children: List.generate(politicos.length, (index) {
-              return _mostrarPoliticoCard(politicos[index]);
+            mainAxisSpacing: 4.0,
+            childAspectRatio: 1.0,
+            crossAxisSpacing: 4.0,
+            children: List.generate(cantidad, (index) {
+              return GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacementNamed(context, 'single_item', arguments: politicos[index]);
+                },
+                  child: _mostrarPoliticoCard(politicos[index]),
+              );
             }),
           );
         } else {

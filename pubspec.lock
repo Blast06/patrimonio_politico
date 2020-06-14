@@ -159,7 +159,7 @@ packages:
     source: hosted
     version: "1.1.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -179,6 +179,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  money2:
+    dependency: "direct main"
+    description:
+      name: money2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-beta.1"
   path:
     dependency: transitive
     description:
@@ -292,3 +299,4 @@ packages:
 sdks:
   dart: ">=2.5.0 <3.0.0"
   flutter: ">=1.12.13 <2.0.0"
+  meta: ">=1.1.7 <2.0.0"

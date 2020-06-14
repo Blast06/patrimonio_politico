@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:money2/money2.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
 import 'package:patrimoniopolitico/widgets/mini_card.dart';
 
@@ -9,7 +11,8 @@ class SingleItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments;
-//    Politico(args[0], itemName, patrimonio, partido, cargo, imageNumber)
+    final Currency rd = Currency.create('RD', 0);
+
     Politico politico = args;
     Color prin = Colors.amberAccent;
     Color lightb = new Color.fromRGBO(181, 204, 230, 1);
@@ -37,17 +40,6 @@ class SingleItemPage extends StatelessWidget {
                 ),
               ),
             ),
-//            Positioned(
-//                top: 45 * one_percent_screen_height,
-//                child: FittedBox(
-//                  child: Container(
-//                    width: one_percent_screen_width * 100,
-//                    height: one_percent_screen_height * 70,
-//                    decoration: BoxDecoration(
-//                        borderRadius: BorderRadius.all(Radius.circular(55)),
-//                        color: Colors.red),
-//                  ),
-//                )),
             Positioned(
               top: 46 * one_percent_screen_height,
               left: 35 * one_percent_screen_width,
@@ -59,17 +51,7 @@ class SingleItemPage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-//            Positioned(
-//              top: 54 * one_percent_screen_height,
-//              left: 9 * one_percent_screen_width,
-//              child: Text(
-//                politico.partido,
-//                style: TextStyle(
-//                    color: Colors.black,
-//                    fontSize: 15,
-//                    fontWeight: FontWeight.normal),
-//              ),
-//            ),
+
 
             Positioned(
               top: 50 * one_percent_screen_height,
@@ -78,7 +60,7 @@ class SingleItemPage extends StatelessWidget {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 50 ),
                 child: AutoSizeText(
-                  politico.patrimonio.toString(),
+                  Money.fromInt(politico.patrimonio, rd).format('###,###,###'),
                   maxLines: 1,
                   style: TextStyle(
                       color: Colors.black,
@@ -114,7 +96,7 @@ class SingleItemPage extends StatelessWidget {
                     height: one_percent_screen_height * 40,
                     child: GridView.count(
                       childAspectRatio: 0.9,
-                      crossAxisCount: 2,
+                      crossAxisCount: 1,
                       crossAxisSpacing: one_percent_screen_height,
                       children: List.generate(gastosLista.length, (index) {
                         return MiniCard(

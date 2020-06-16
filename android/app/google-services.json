@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "293791789500",
+    "firebase_url": "https://patrimoniopolitico.firebaseio.com",
+    "project_id": "patrimoniopolitico",
+    "storage_bucket": "patrimoniopolitico.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293791789500:android:52cfa9d2aca4305f7c7bb9",
+        "android_client_info": {
+          "package_name": "com.patrimonio.politicosdominicanos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293791789500-7p17tm2078odrhkbhkupb0se18a7l4rm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbErg11qwDglW_3t80DSZjAkZ92tvw1rY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293791789500-7p17tm2078odrhkbhkupb0se18a7l4rm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

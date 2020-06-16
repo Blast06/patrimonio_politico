@@ -139,7 +139,7 @@ class _MiniCardState extends State<MiniCard> {
                   ),
 //                  TextFormField(
 //                    controller: _textEditingController,
-////                    initialValue: '1',
+//
 //                  ),
                   Icon(Icons.add, color: Colors.white, size: 30)
                 ],

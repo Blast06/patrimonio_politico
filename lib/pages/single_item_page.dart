@@ -50,7 +50,6 @@ class SingleItemPage extends StatelessWidget {
                   endIndent: 0,
                 ),
                 _crearGridView(politico, one_percent_screen_height, one_percent_screen_width)
-
               ]
 
               ),)
@@ -67,13 +66,16 @@ class SingleItemPage extends StatelessWidget {
     return SliverAppBar(
       elevation: 2.0,
       backgroundColor: Colors.indigoAccent,
-      expandedHeight: 200.0,
+      expandedHeight: 400.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        title: Text(Money.fromInt(politico.patrimonio, rd).format('###,###,###'), overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.green, fontSize: 16.0)
+        title: Container(
+          color: Colors.green,
+          child: Text(Money.fromInt(politico.patrimonio, rd).format('###,###,###'), overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.black54, fontSize: 16.0)
+          ),
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/imgs/loading.gif'),
@@ -104,12 +106,12 @@ class SingleItemPage extends StatelessWidget {
     return Center(
           child: Container(
 //            color: Colors.red,
-                  margin: EdgeInsets.all(10.0),
+                  margin: EdgeInsets.all(5.0),
             width: one_percent_screen_width * 100,
             height: one_percent_screen_height * 100,
             child: GridView.count(
               childAspectRatio: 0.9,
-              crossAxisCount: 1,
+              crossAxisCount: 2,
               crossAxisSpacing: one_percent_screen_height,
               children: List.generate(gastosLista.length, (index) {
                 return MiniCard2(

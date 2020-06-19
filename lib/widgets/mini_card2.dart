@@ -10,6 +10,7 @@ class MiniCard2 extends StatefulWidget {
   String _image;
   int _price;
   Color _ContainerColor = Colors.amberAccent;
+  int cantidad = 1;
 
   MiniCard2(this._title, this._image, this._price, this._ContainerColor);
   @override
@@ -22,7 +23,7 @@ class _MiniCard2State extends State<MiniCard2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-//              margin: EdgeInsets.all(5.0),
+              margin: EdgeInsets.all(2.0),
       decoration: BoxDecoration(
           color: Color(color), borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -30,10 +31,10 @@ class _MiniCard2State extends State<MiniCard2> {
         children: <Widget>[
           Image.network(
             widget._image,
-            width: 42,
+            width: 50,
           ),
           SizedBox(
-            height: 14,
+            height: 35,
           ),
           Text(
             widget._title,
@@ -44,29 +45,33 @@ class _MiniCard2State extends State<MiniCard2> {
                     fontWeight: FontWeight.w600)),
           ),
           SizedBox(
-            height: 8,
+            height: 6,
           ),
           Text(
             widget._price.toString(),
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
-                    color: Colors.white38,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600)),
+                    color: Colors.white54,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700)),
           ),
           SizedBox(
             height: 14,
           ),
-          Text(
-            widget._title,
-            style: GoogleFonts.openSans(
-                textStyle: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27)),
+              Text(widget.cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
+              Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27)),
+            ],
           ),
         ],
       ),
     );
+  }
+
+  restar() {
+
   }
 }

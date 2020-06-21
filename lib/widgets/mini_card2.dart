@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
+import 'package:patrimoniopolitico/models/politico_model.dart';
+import 'package:provider/provider.dart';
 
 
 class MiniCard2 extends StatefulWidget {
@@ -22,6 +24,7 @@ class _MiniCard2State extends State<MiniCard2> {
 
   @override
   Widget build(BuildContext context) {
+    final politico = Provider.of<Politico>(context);
     return Container(
               margin: EdgeInsets.all(2.0),
       decoration: BoxDecoration(
@@ -61,9 +64,9 @@ class _MiniCard2State extends State<MiniCard2> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27)),
+              GestureDetector(onTap:()=>restar(politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
               Text(widget.cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
-              Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27)),
+              GestureDetector(onTap:()=>aumentar(politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
             ],
           ),
         ],
@@ -71,7 +74,18 @@ class _MiniCard2State extends State<MiniCard2> {
     );
   }
 
-  restar() {
+  restar(Politico politico) {
+  setState(() {
+    if(widget.cantidad < 1) return;
+    widget.cantidad--;
+    politico.patrimonio -=widget.cantidad;
+  });
 
+  }
+  aumentar(Politico politico) {
+    setState(() {
+      widget.cantidad++;
+    });
+    politico.gastarPatrimonio(widget.cantidad);
   }
 }

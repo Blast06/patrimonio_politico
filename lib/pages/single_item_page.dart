@@ -11,6 +11,8 @@ import '../models/politico_model.dart';
 
 class SingleItemPage extends StatelessWidget {
 
+
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute
@@ -32,8 +34,7 @@ class SingleItemPage extends StatelessWidget {
         .of(context)
         .size
         .width * 0.01;
-    print(args);
-    print(politico.cargo);
+
     return Scaffold(
         body: Center(
           child: CustomScrollView(
@@ -169,3 +170,6 @@ class SingleItemPage extends StatelessWidget {
 
 //),
 //),
+aumentar() {
+
+}

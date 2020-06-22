@@ -55,8 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     // TODO: implement initState
-//    final List<Politico> politicos = new List();
-    final cargarPoliticos = politicosProvider.cargarPoliticos();
 
     super.initState();
   }
@@ -64,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void changeToValue(int value) {
     setState(() {
       for (int current_value = 0;
-          current_value < ActiveButton.length;
-          current_value++) {
+      current_value < ActiveButton.length;
+      current_value++) {
         if (current_value == value) {
           ActiveButton[current_value] = 1;
         } else {
@@ -106,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                     color: peach,
                     borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(55))),
+                    BorderRadius.only(bottomLeft: Radius.circular(55))),
               ),
             ),
             Positioned(
@@ -220,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: (){
                   Navigator.pushReplacementNamed(context, 'single_item', arguments: politicos[index]);
                 },
-                  child: _mostrarPoliticoCard(politicos[index]),
+                child: _mostrarPoliticoCard(politicos[index]),
               );
             }),
           );

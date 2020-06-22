@@ -119,7 +119,8 @@ class SingleItemPage extends StatelessWidget {
                   gastosLista[index].title,
                   gastosLista[index].image,
                   gastosLista[index].price,
-                  Colors.amberAccent
+                  Colors.amberAccent,
+                  politico
                 );
               }),
             ),

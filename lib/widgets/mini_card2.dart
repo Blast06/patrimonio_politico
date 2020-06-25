@@ -12,10 +12,10 @@ class MiniCard2 extends StatefulWidget {
   String _image;
   int _price;
   Color _ContainerColors = Colors.amberAccent;
-  int cantidad = 0;
-  Politico politico;
+  int cantidad;
 
-  MiniCard2(this._title, this._image, this._price, this._ContainerColors, this.politico);
+
+  MiniCard2(this._title, this._image, this._price, this._ContainerColors, this.cantidad);
   @override
   _MiniCard2State createState() => _MiniCard2State();
 }
@@ -25,7 +25,7 @@ class _MiniCard2State extends State<MiniCard2> {
 
   @override
   Widget build(BuildContext context) {
-//    final politico = Provider.of<Politico>(context);
+    final politico = Provider.of<Politico>(context);
     return Container(
               margin: EdgeInsets.all(2.0),
       decoration: BoxDecoration(
@@ -65,9 +65,9 @@ class _MiniCard2State extends State<MiniCard2> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              GestureDetector(onTap:()=>restar(widget.politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
+              GestureDetector(onTap:()=>restar(politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
               Text(widget.cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
-              GestureDetector(onTap:()=>aumentar(widget.politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
+              GestureDetector(onTap:()=>aumentar(politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
             ],
           ),
         ],
@@ -75,18 +75,13 @@ class _MiniCard2State extends State<MiniCard2> {
     );
   }
 
+//acciones de botones
   restar(Politico politico) {
-  setState(() {
-    if(widget.cantidad < 1) return;
-    widget.cantidad--;
-    politico.gastarPatrimonio(widget.cantidad);
-  });
-
+    Provider.of<Gasto>(context).decrementar();
   }
+
   aumentar(Politico politico) {
-    setState(() {
-      widget.cantidad++;
-    });
-    politico.gastarPatrimonio(widget.cantidad);
+    Provider.of<Gasto>(context).aumentar();
+
   }
 }

@@ -6,6 +6,7 @@ import 'package:money2/money2.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
 import 'package:patrimoniopolitico/widgets/mini_card.dart';
 import 'package:patrimoniopolitico/widgets/mini_card2.dart';
+import 'package:provider/provider.dart';
 
 import '../models/politico_model.dart';
 
@@ -22,6 +23,7 @@ class SingleItemPage extends StatelessWidget {
     final Currency rd = Currency.create('RD', 0);
 
     Politico politico = args;
+//    final politico = Provider.of<Politico>(context);
     Color prin = Colors.amberAccent;
     Color lightb = new Color.fromRGBO(181, 204, 230, 1);
     Color lightred = new Color.fromRGBO(232, 190, 208, 1);
@@ -50,7 +52,7 @@ class SingleItemPage extends StatelessWidget {
                   indent: 20,
                   endIndent: 0,
                 ),
-                _crearGridView(politico, one_percent_screen_height, one_percent_screen_width)
+                _crearGridView(politico, one_percent_screen_height, one_percent_screen_width, context)
               ]
 
               ),)
@@ -103,74 +105,33 @@ class SingleItemPage extends StatelessWidget {
     );
   }
 
-  Widget _crearGridView(Politico politico, double one_percent_screen_height, double one_percent_screen_width) {
+  Widget _crearGridView(Politico politico, double one_percent_screen_height, double one_percent_screen_width, BuildContext context){
+    List<Gasto> gastos = Provider.of<Gasto>(context).getLista();
     return Center(
-          child: Container(
+      child: Container(
 //            color: Colors.red,
-                  margin: EdgeInsets.all(5.0),
-            width: one_percent_screen_width * 100,
-            height: one_percent_screen_height * 100,
-            child: GridView.count(
-              childAspectRatio: 0.9,
-              crossAxisCount: 2,
-              crossAxisSpacing: one_percent_screen_height,
-              children: List.generate(gastosLista.length, (index) {
-                return MiniCard2(
-                  gastosLista[index].title,
-                  gastosLista[index].image,
-                  gastosLista[index].price,
-                  Colors.amberAccent,
-                  politico
-                );
-              }),
-            ),
-          ),
-        );
+        margin: EdgeInsets.all(5.0),
+        width: one_percent_screen_width * 100,
+        height: one_percent_screen_height * 100,
+        child: GridView.count(
+          childAspectRatio: 0.9,
+          crossAxisCount: 2,
+          crossAxisSpacing: one_percent_screen_height,
+          children: List.generate(Provider.of<Gasto>(context).getLista().length, (index) {
+            return MiniCard2(
+                gastos[index].title,
+                gastos[index].image,
+                gastos[index].price,
+                Colors.amberAccent,
+                gastos[index].cantidad
+            );
+          }),
+        ),
+      ),
+    );
 
   }
 
 }
-//
-//Positioned(
-//top: 0,
-//child: FittedBox(
-//child: Container(
-//width: one_percent_screen_width * 100,
-//height: one_percent_screen_height * 45,
-//child: FadeInImage(
-//placeholder: AssetImage('assets/imgs/loading.gif'),
-//image: NetworkImage(politico.itemImage),
-//fit: BoxFit.cover,
-//),
-//),
-//),
-//),
-//Positioned(
-//top: 46 * one_percent_screen_height,
-//left: 35 * one_percent_screen_width,
-//child: Text(
-//politico.itemName,
-//style: TextStyle(
-//color: Colors.black,
-//fontSize: 25,
-//fontWeight: FontWeight.bold),
-//),
-//),
-//
-//
 
 
-//
-//Positioned(
-//top: 59 * one_percent_screen_height,
-//left: -20,
-//child: Container(
-//width: one_percent_screen_width * 120,
-//height: one_percent_screen_height * 0.1,
-////                color: Colors.red,
-
-//),
-//),
-aumentar() {
-
-}

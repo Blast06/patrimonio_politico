@@ -8,7 +8,7 @@ Politico politicoModelFromJson(String str) => Politico.fromJson(json.decode(str)
 
 String  politicoModelToJson(Politico data) => json.encode(data.toJson());
 
-class Politico with ChangeNotifier{
+class Politico extends ChangeNotifier{
   String id;
   String itemImage;
   String itemName;
@@ -65,17 +65,3 @@ class Politico with ChangeNotifier{
   }
 
 }
-
-
-//final politicosLista = <Politico> [
-//  new Politico(itemImage:"https://www.sincortapisa.com/wp-content/uploads/2020/03/gonzalo-castillo-800x445.jpg", itemName:"Gonzalo", patrimonio"500,000,000", partido:"PLD", cargo:"Candidato-MOPC", imageNumber: 1,show:true),
-//  new Politico(id:"1",itemImage:"https://i.ytimg.com/vi/bRWe550thOE/maxresdefault.jpg", itemName:"Felix Bautista", patrimonio:120000000000, partido:"PLD", cargo:"Senador",show: true),
-//  new Politico(id:"2",itemImage:"https://i.ytimg.com/vi/bRWe550thOE/maxresdefault.jpg",itemName:"Julio",patrimonio:12000000,partido:"PRD",cargo:"Consul",show: true),
-//  new Politico(id:"3",itemImage:"https://i.ytimg.com/vi/bRWe550thOE/maxresdefault.jpg",itemName:"Julio",patrimonio:12000000,partido:"PRD",cargo:"Consul",show: true),
-//  new Politico(id:"4",itemImage:"https://i.ytimg.com/vi/bRWe550thOE/maxresdefault.jpg",itemName:"Julio",patrimonio:12000000,partido:"PRD",cargo:"Consul",show: true),
-//  new Politico(id:"5",itemImage:"https://i.ytimg.com/vi/bRWe550thOE/maxresdefault.jpg",itemName:"Julio",patrimonio:12000000,partido:"PRD",cargo:"Consul",show: true),
-//  new Politico(id:"6",itemImage: "https://www.sincortapisa.com/wp-content/uploads/2020/03/gonzalo-castillo-800x445.jpg",itemName: "Gonzalo", patrimonio: 50000000,partido: "PLD", cargo: "Candidato",show: true ),
-//  new Politico(id:"7",itemImage: "https://www.65ymas.com/uploads/s1/63/52/4/bigstock-airplane-interior-32492834_1_621x621.jpeg",itemName: "jopo", patrimonio: 50000000,partido: "PLD", cargo: "Candidato",show: true ),
-//
-//
-//];

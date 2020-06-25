@@ -17,10 +17,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => Politico(),
+    final politicosProvider = PoliticosProvider();
+    return MultiProvider(
+      providers: [
+        FutureProvider(create: (BuildContext context) => politicosProvider.cargarPoliticos()),
+        ChangeNotifierProvider<Gasto>(create: (context) => Gasto()),
+      ],
       child: MaterialApp(
-        title: 'Politico Money',
+        title: 'Waste Money',
         initialRoute: 'home',
         routes: getApplicationRoutes(),
         theme: ThemeData(
@@ -42,15 +46,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static final politicosProvider = new PoliticosProvider();
-  final cargarPoliticos = politicosProvider.cargarPoliticos();
+
+
 
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   int _counter = 0;
   List<int> ActiveButton = [1, 0, 0, 0];
 
-  //TODO: PREPARAR ESATA DATA PARA CONVERTIRLA DESDE FIREBASE
-//  List<Politico> Politicos = new Politico(itemImage, itemName, patrimonio, partido, cargo, imageNumber)
+
 
   @override
   void initState() {
@@ -84,6 +87,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final cargarPoliticos = Provider.of<List<Politico>>(context);
+
     double one_percent_screen_height =
         MediaQuery.of(context).size.height * 0.01;
     double one_percent_screen_width = MediaQuery.of(context).size.width * 0.01;
@@ -120,17 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
-//            Positioned(
-//              top: 19 * one_percent_screen_height,
-//              left: 5 * one_percent_screen_width,
-//              child: Text(
-//                'Elige el politico que quieras y empieza a gastar!',
-//                style: TextStyle(
-//                    fontSize: 12,
-//                    color: Color.fromRGBO(0, 0, 0, 0.3),
-//                    fontWeight: FontWeight.w600),
-//              ),
-//            ),
+
             Positioned(
               top: 20 * one_percent_screen_height,
               left: 4 * one_percent_screen_width,
@@ -193,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
               left: one_percent_screen_width * 5,
               width: one_percent_screen_width * 90,
               height: one_percent_screen_height * 60,
-              child: _crearListado(),
+              child: _crearListado(cargarPoliticos),
             )
           ],
         ),
@@ -201,12 +196,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _crearListado() {
-    return FutureBuilder(
-      future: cargarPoliticos,
-      builder: (BuildContext context, AsyncSnapshot<List<Politico>> snapshot) {
-        if (snapshot.hasData) {
-          final politicos = snapshot.data;
+  _crearListado(List<Politico> politicos) {
+
           final cantidad = politicos.length;
           return GridView.count(
             crossAxisCount: 2,
@@ -222,11 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             }),
           );
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
+
   }
 
   Widget _mostrarPoliticoCard(Politico politico) {

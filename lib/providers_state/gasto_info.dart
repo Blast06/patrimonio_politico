@@ -6,21 +6,33 @@ import 'package:patrimoniopolitico/models/gasto_model.dart';
 
 class GastoInfo with ChangeNotifier{
 
-  List<Gasto> gasto = [];
-  Gasto gastos = new Gasto();
+  List<Gasto> _lista = gastosLista;
 
 
-  List<Gasto> get allGastos => gastos.getLista();
+  get allGastos {
+    return _lista;
+  }
+  set lista(List<Gasto> x) {
+    this._lista = x;
+
+  }
+// get allGastos => gastosLista;
+
 
   aumentar(Gasto gasto, int index) {
-//    allGastos[index].cantidad++;
-    gasto.cantidad++;
+//    this.allGastos[index].cantidad++;
+    this._lista[index].cantidad++;
+//    gasto.cantidad++;
     notifyListeners();
   }
 
   decrementar(Gasto gasto, int index) {
-//    allGastos[index].cantidad = allGastos[index].cantidad < 1 ? 0 : allGastos[index].cantidad--;
-    gasto.cantidad = gasto.cantidad < 1 ?  0 : gasto.cantidad--;
+    if(this._lista[index].cantidad < 1) return;
+    this._lista[index].cantidad--;
+
+//    this._lista[index].cantidad = this._lista[index].cantidad == 0 ?? this._lista[index].cantidad--;
+//    this.allGastos[index].cantidad = this.allGastos[index].cantidad < 1 ? 0 : this.allGastos[index].cantidad--;
+//    gasto.cantidad = gasto.cantidad < 1 ?  0 : gasto.cantidad--;
     notifyListeners();
   }
 

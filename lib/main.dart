@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     final politicosProvider = PoliticosProvider();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Gasto>(create: (context) => Gasto()),
+//        ChangeNotifierProvider<Gasto>(create: (context) => Gasto()),
         ChangeNotifierProvider<GastoInfo>(create: (context) => GastoInfo()),
         FutureProvider(create: (BuildContext context) => politicosProvider.cargarPoliticos()),
 //        ChangeNotifierProvider<Politico>(create: (context) => Politico()),

@@ -28,7 +28,7 @@ class _MiniCard2State extends State<MiniCard2> {
 
   @override
   Widget build(BuildContext context) {
-    final gastos = Provider.of<GastoInfo>(context).allGastos;
+//    final gastos = Provider.of<GastoInfo>(context).allGastos;
     Gasto gasto;
     return Container(
               margin: EdgeInsets.all(2.0),
@@ -38,14 +38,14 @@ class _MiniCard2State extends State<MiniCard2> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.network(
-            gastos[widget.index].image,
+            Provider.of<GastoInfo>(context).allGastos[widget.index].image,
             width: 50,
           ),
           SizedBox(
             height: 35,
           ),
           Text(
-            widget._title,
+            Provider.of<GastoInfo>(context).allGastos[widget.index].title,
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Colors.white,
@@ -56,7 +56,7 @@ class _MiniCard2State extends State<MiniCard2> {
             height: 6,
           ),
           Text(
-            gastos[widget.index].price.toString(),
+            Provider.of<GastoInfo>(context).allGastos[widget.index].price.toString(),
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Colors.white54,
@@ -69,9 +69,9 @@ class _MiniCard2State extends State<MiniCard2> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              GestureDetector(onTap:()=>restar(gasto, widget.index),child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
-              Text(gastos[widget.index].cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
-              GestureDetector(onTap:()=>aumentar(gasto, widget.index),child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
+              GestureDetector(onTap:(){ Provider.of<GastoInfo>(context, listen: false).decrementar(gasto, widget.index);},child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
+              Text(Provider.of<GastoInfo>(context).allGastos[widget.index].cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
+              GestureDetector(onTap:(){ Provider.of<GastoInfo>(context, listen: false).aumentar(gasto, widget.index);},child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
             ],
           ),
         ],
@@ -82,11 +82,11 @@ class _MiniCard2State extends State<MiniCard2> {
 //acciones de botones
   restar(Gasto gasto, int index) {
     print('prueba');
-    Provider.of<GastoInfo>(context,listen: false).decrementar(gasto, index);
+    Provider.of<GastoInfo>(context).decrementar(gasto, index);
   }
 
   aumentar(Gasto gasto, int index) {
-    Provider.of<GastoInfo>(context,listen: false).aumentar(gasto, index);
+    Provider.of<GastoInfo>(context).aumentar(gasto, index);
 
   }
 }

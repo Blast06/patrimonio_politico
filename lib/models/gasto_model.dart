@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Gasto extends ChangeNotifier{
+class Gasto{
   String title;
   String image;
   int price;
@@ -12,13 +12,6 @@ class Gasto extends ChangeNotifier{
     this.price,
     this.cantidad
      });
-
-
-  List<Gasto> getLista() {
-    return gastosLista;
-  }
-
-
 
 }
 

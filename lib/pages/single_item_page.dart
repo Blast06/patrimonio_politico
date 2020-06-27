@@ -107,7 +107,7 @@ class SingleItemPage extends StatelessWidget {
   }
 
   Widget _crearGridView(Politico politico, double one_percent_screen_height, double one_percent_screen_width, BuildContext context){
-    final gastos = Provider.of<GastoInfo>(context).allGastos;
+//    final gastos = Provider.of<GastoInfo>(context).allGastos;
     return Center(
       child: Container(
 //            color: Colors.red,
@@ -118,13 +118,13 @@ class SingleItemPage extends StatelessWidget {
           childAspectRatio: 0.9,
           crossAxisCount: 2,
           crossAxisSpacing: one_percent_screen_height,
-          children: List.generate(gastos.length, (index) {
+          children: List.generate(Provider.of<GastoInfo>(context).allGastos.length, (index) {
             return MiniCard2(
-                gastos[index].title,
-                gastos[index].image,
-                gastos[index].price,
+                Provider.of<GastoInfo>(context).allGastos[index].title,
+                Provider.of<GastoInfo>(context).allGastos[index].image,
+                Provider.of<GastoInfo>(context).allGastos[index].price,
                 Colors.amberAccent,
-                gastos[index].cantidad,
+                Provider.of<GastoInfo>(context).allGastos[index].cantidad,
                 index
             );
           }),

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:money2/money2.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
+import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
 import 'package:patrimoniopolitico/widgets/mini_card.dart';
 import 'package:patrimoniopolitico/widgets/mini_card2.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class SingleItemPage extends StatelessWidget {
               _crearAppbar(politico, rd),
               SliverList(delegate: SliverChildListDelegate([
                 SizedBox(height: 10.0),
-                _crearPatrimonio(politico, rd),
+                _crearPatrimonio(politico, rd, context),
                 Divider(
                   color: Colors.black,
                   height: 15,
@@ -90,7 +91,7 @@ class SingleItemPage extends StatelessWidget {
     );
   }
 
-  Widget _crearPatrimonio(Politico politico, Currency rd) {
+  Widget _crearPatrimonio(Politico politico, Currency rd, BuildContext context) {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: 50),
@@ -106,7 +107,7 @@ class SingleItemPage extends StatelessWidget {
   }
 
   Widget _crearGridView(Politico politico, double one_percent_screen_height, double one_percent_screen_width, BuildContext context){
-    List<Gasto> gastos = Provider.of<Gasto>(context).getLista();
+    final gastos = Provider.of<GastoInfo>(context).allGastos;
     return Center(
       child: Container(
 //            color: Colors.red,
@@ -117,13 +118,14 @@ class SingleItemPage extends StatelessWidget {
           childAspectRatio: 0.9,
           crossAxisCount: 2,
           crossAxisSpacing: one_percent_screen_height,
-          children: List.generate(Provider.of<Gasto>(context).getLista().length, (index) {
+          children: List.generate(gastos.length, (index) {
             return MiniCard2(
                 gastos[index].title,
                 gastos[index].image,
                 gastos[index].price,
                 Colors.amberAccent,
-                gastos[index].cantidad
+                gastos[index].cantidad,
+                index
             );
           }),
         ),

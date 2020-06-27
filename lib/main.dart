@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patrimoniopolitico/buttons.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
+import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
 import 'package:patrimoniopolitico/routes/routes.dart';
 import 'package:patrimoniopolitico/widgets/custom_drawer.dart';
 import 'package:patrimoniopolitico/provider/politicos_provider.dart';
@@ -9,7 +10,11 @@ import 'package:provider/provider.dart';
 import 'cards.dart';
 import 'models/politico_model.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  final politicosProvider = PoliticosProvider();
+  //TODO: PONER PROVIDER AQUI PARA EVITAR ERROR AL CARGAR
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -20,8 +25,10 @@ class MyApp extends StatelessWidget {
     final politicosProvider = PoliticosProvider();
     return MultiProvider(
       providers: [
-        FutureProvider(create: (BuildContext context) => politicosProvider.cargarPoliticos()),
         ChangeNotifierProvider<Gasto>(create: (context) => Gasto()),
+        ChangeNotifierProvider<GastoInfo>(create: (context) => GastoInfo()),
+        FutureProvider(create: (BuildContext context) => politicosProvider.cargarPoliticos()),
+//        ChangeNotifierProvider<Politico>(create: (context) => Politico()),
       ],
       child: MaterialApp(
         title: 'Waste Money',
@@ -76,12 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _incrementCounter() {
-    setState(() {
-      //leaving this for implementation of backend
-//      _counter++;
-    });
-  }
+
 
   Color peach = Colors.blue;
 

@@ -1,12 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:patrimoniopolitico/models/politico_model.dart';
 
 
-class PoliticosProvider {
+class PoliticosProvider extends ChangeNotifier{
 
   final _url = 'https://patrimoniopolitico.firebaseio.com';
+  final List<Politico> politicos = [];
+
 
 
   Future<bool> agregarPolitico(Politico politico) async {
@@ -30,11 +33,10 @@ class PoliticosProvider {
     final resp = await http.get(url);
 
     final Map<String,dynamic>decodedData = json.decode(resp.body);
-    final List<Politico> politicos = new List();
 
     if(decodedData == null) return [];
 
-    // foreach barre cada id(el id raro que esta al tope de cada politico, ver video 218 de curso de flutter de fernando en minuto 7:00) y el poli es cada politico
+
     decodedData.forEach( (id,poli){
       final poliTemp = Politico.fromJson(poli);
       poliTemp.id = id;

@@ -51,17 +51,6 @@ class Politico extends ChangeNotifier{
         "show" : show
       };
 
-  gastarPatrimonio(int precioArticuloServicio) {
 
-    if(patrimonio - precioArticuloServicio < 0){
-      return false;
-    } else {
-      patrimonio -= precioArticuloServicio;
-      print(patrimonio);
-      notifyListeners();
-    }
-
-
-  }
 
 }

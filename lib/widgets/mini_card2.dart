@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
 import 'package:patrimoniopolitico/models/politico_model.dart';
+import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
+import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
 import 'package:provider/provider.dart';
 
 
@@ -13,9 +15,10 @@ class MiniCard2 extends StatefulWidget {
   int _price;
   Color _ContainerColors = Colors.amberAccent;
   int cantidad;
+  int index;
 
 
-  MiniCard2(this._title, this._image, this._price, this._ContainerColors, this.cantidad);
+  MiniCard2(this._title, this._image, this._price, this._ContainerColors, this.cantidad, this.index);
   @override
   _MiniCard2State createState() => _MiniCard2State();
 }
@@ -25,7 +28,8 @@ class _MiniCard2State extends State<MiniCard2> {
 
   @override
   Widget build(BuildContext context) {
-    final politico = Provider.of<Politico>(context);
+    final gastos = Provider.of<GastoInfo>(context).allGastos;
+    Gasto gasto;
     return Container(
               margin: EdgeInsets.all(2.0),
       decoration: BoxDecoration(
@@ -34,7 +38,7 @@ class _MiniCard2State extends State<MiniCard2> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.network(
-            widget._image,
+            gastos[widget.index].image,
             width: 50,
           ),
           SizedBox(
@@ -52,7 +56,7 @@ class _MiniCard2State extends State<MiniCard2> {
             height: 6,
           ),
           Text(
-            widget._price.toString(),
+            gastos[widget.index].price.toString(),
             style: GoogleFonts.openSans(
                 textStyle: TextStyle(
                     color: Colors.white54,
@@ -65,9 +69,9 @@ class _MiniCard2State extends State<MiniCard2> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              GestureDetector(onTap:()=>restar(politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
-              Text(widget.cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
-              GestureDetector(onTap:()=>aumentar(politico),child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
+              GestureDetector(onTap:()=>restar(gasto, widget.index),child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
+              Text(gastos[widget.index].cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),
+              GestureDetector(onTap:()=>aumentar(gasto, widget.index),child: Container(color: Colors.amberAccent,child: Icon(Icons.add, color: Colors.white, size: 27))),
             ],
           ),
         ],
@@ -76,12 +80,13 @@ class _MiniCard2State extends State<MiniCard2> {
   }
 
 //acciones de botones
-  restar(Politico politico) {
-    Provider.of<Gasto>(context).decrementar();
+  restar(Gasto gasto, int index) {
+    print('prueba');
+    Provider.of<GastoInfo>(context,listen: false).decrementar(gasto, index);
   }
 
-  aumentar(Politico politico) {
-    Provider.of<Gasto>(context).aumentar();
+  aumentar(Gasto gasto, int index) {
+    Provider.of<GastoInfo>(context,listen: false).aumentar(gasto, index);
 
   }
 }

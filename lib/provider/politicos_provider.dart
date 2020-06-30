@@ -11,6 +11,11 @@ class PoliticosProvider extends ChangeNotifier{
   final List<Politico> politicos = [];
 
 
+  PoliticosProvider(){
+    print('empezo');
+    this.cargarPoliticos();
+    print('termino');
+  }
 
   Future<bool> agregarPolitico(Politico politico) async {
 
@@ -44,11 +49,16 @@ class PoliticosProvider extends ChangeNotifier{
       politicos.add(poliTemp);
 
     });
-
+    print('termino2');
+    print(politicos.length);
     return politicos;
 
   }
 
+  gastarPatrimonio(int index, int cantidad, int precio) {
+    this.politicos[index].patrimonio -= (cantidad * precio);
+    notifyListeners();
+  }
 
 
 }

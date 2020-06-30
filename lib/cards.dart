@@ -10,10 +10,11 @@ class ItemCard extends StatelessWidget {
   int _Patrimonio;
   String _Partido;
   String _Cargo;
+  int index;
 //  int _ImageNumber;
 
   ItemCard(this._ItemImage, this._ItemName, this._Patrimonio, this._Partido,
-      this._Cargo);
+      this._Cargo, this.index);
 
   @override
   Widget build(BuildContext context) {

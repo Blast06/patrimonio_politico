@@ -9,7 +9,7 @@ class GastoInfo with ChangeNotifier{
   List<Gasto> _lista = gastosLista;
 
 
-  get allGastos {
+  List<Gasto> get allGastos {
     return _lista;
   }
   set lista(List<Gasto> x) {
@@ -19,14 +19,14 @@ class GastoInfo with ChangeNotifier{
 // get allGastos => gastosLista;
 
 
-  aumentar(Gasto gasto, int index) {
+  aumentar(int index) {
 //    this.allGastos[index].cantidad++;
     this._lista[index].cantidad++;
 //    gasto.cantidad++;
     notifyListeners();
   }
 
-  decrementar(Gasto gasto, int index) {
+  decrementar(int index) {
     if(this._lista[index].cantidad < 1) return;
     this._lista[index].cantidad--;
 

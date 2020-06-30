@@ -33,6 +33,7 @@ dependencies:
   intl:
   money2:
   google_fonts: ^0.2.0
+  characters:
   image_cropper:
   provider:
 

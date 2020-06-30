@@ -2,13 +2,14 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:patrimoniopolitico/provider/politicos_provider.dart';
 
 
 Politico politicoModelFromJson(String str) => Politico.fromJson(json.decode(str));
 
 String  politicoModelToJson(Politico data) => json.encode(data.toJson());
 
-class Politico extends ChangeNotifier{
+class Politico with ChangeNotifier{
   String id;
   String itemImage;
   String itemName;
@@ -26,6 +27,10 @@ class Politico extends ChangeNotifier{
     this.cargo,
     this.show = false
   });
+
+  List<Politico> politico;
+  PoliticosProvider politicosProvider;
+
 
 
 
@@ -51,6 +56,15 @@ class Politico extends ChangeNotifier{
         "show" : show
       };
 
+  Future<List<Politico>> politicosList() async {
+    this.politico = await politicosProvider.cargarPoliticos();
+    return politico;
+  }
+
+  gastarPatrimonio(int index, int cantidad, int precio) {
+    this.politico[index].patrimonio -= (cantidad * precio);
+    notifyListeners();
+  }
 
 
 }

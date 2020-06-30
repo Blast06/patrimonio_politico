@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:money2/money2.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
+import 'package:patrimoniopolitico/provider/politicos_provider.dart';
 import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
+import 'package:patrimoniopolitico/providers_state/politicos.info.dart';
 import 'package:patrimoniopolitico/widgets/mini_card.dart';
 import 'package:patrimoniopolitico/widgets/mini_card2.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +25,8 @@ class SingleItemPage extends StatelessWidget {
         .arguments;
     final Currency rd = Currency.create('RD', 0);
 
-    Politico politico = args;
-//    final politico = Provider.of<Politico>(context);
+    int index = args;
+
     Color prin = Colors.amberAccent;
     Color lightb = new Color.fromRGBO(181, 204, 230, 1);
     Color lightred = new Color.fromRGBO(232, 190, 208, 1);
@@ -42,10 +44,10 @@ class SingleItemPage extends StatelessWidget {
         body: Center(
           child: CustomScrollView(
             slivers: <Widget>[
-              _crearAppbar(politico, rd),
+              _crearAppbar(index, rd, context),
               SliverList(delegate: SliverChildListDelegate([
                 SizedBox(height: 10.0),
-                _crearPatrimonio(politico, rd, context),
+                _crearPatrimonio(index, rd, context),
                 Divider(
                   color: Colors.black,
                   height: 15,
@@ -53,7 +55,7 @@ class SingleItemPage extends StatelessWidget {
                   indent: 20,
                   endIndent: 0,
                 ),
-                _crearGridView(politico, one_percent_screen_height, one_percent_screen_width, context)
+                _crearGridView(index,one_percent_screen_height, one_percent_screen_width, context)
               ]
 
               ),)
@@ -66,7 +68,9 @@ class SingleItemPage extends StatelessWidget {
   }
 
 
-  Widget _crearAppbar(Politico politico, Currency rd) {
+  Widget _crearAppbar(int index, Currency rd, BuildContext context) {
+   final politico = Provider.of<PoliticosProvider>(context).politicos;
+
     return SliverAppBar(
       elevation: 2.0,
       backgroundColor: Colors.indigoAccent,
@@ -77,13 +81,13 @@ class SingleItemPage extends StatelessWidget {
         centerTitle: true,
         title: Container(
           color: Colors.green,
-          child: Text(Money.fromInt(politico.patrimonio, rd).format('###,###,###'), overflow: TextOverflow.ellipsis,
+          child: Text(Money.fromInt(politico[index].patrimonio, rd).format('###,###,###'), overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Colors.black54, fontSize: 16.0)
           ),
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/imgs/loading.gif'),
-          image: NetworkImage(politico.itemImage),
+          image: NetworkImage(politico[index].itemImage),
           fadeInDuration: Duration(milliseconds: 20),
           fit: BoxFit.cover,
         ),
@@ -91,12 +95,14 @@ class SingleItemPage extends StatelessWidget {
     );
   }
 
-  Widget _crearPatrimonio(Politico politico, Currency rd, BuildContext context) {
+  Widget _crearPatrimonio(int index, Currency rd, BuildContext context) {
+    final politico = Provider.of<PoliticosProvider>(context).politicos;
+
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(horizontal: 50),
       child: AutoSizeText(
-        politico.itemName,
+        politico[index].itemName,
         maxLines: 1,
         style: TextStyle(
             color: Colors.black,
@@ -106,11 +112,9 @@ class SingleItemPage extends StatelessWidget {
     );
   }
 
-  Widget _crearGridView(Politico politico, double one_percent_screen_height, double one_percent_screen_width, BuildContext context){
-//    final gastos = Provider.of<GastoInfo>(context).allGastos;
+  Widget _crearGridView(int indexPolitico ,double one_percent_screen_height, double one_percent_screen_width, BuildContext context){
     return Center(
       child: Container(
-//            color: Colors.red,
         margin: EdgeInsets.all(5.0),
         width: one_percent_screen_width * 100,
         height: one_percent_screen_height * 100,
@@ -125,7 +129,8 @@ class SingleItemPage extends StatelessWidget {
                 Provider.of<GastoInfo>(context).allGastos[index].price,
                 Colors.amberAccent,
                 Provider.of<GastoInfo>(context).allGastos[index].cantidad,
-                index
+                index,
+                indexPolitico,
             );
           }),
         ),

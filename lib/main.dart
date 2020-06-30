@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patrimoniopolitico/buttons.dart';
 import 'package:patrimoniopolitico/models/gasto_model.dart';
 import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
+import 'package:patrimoniopolitico/providers_state/politicos.info.dart';
 import 'package:patrimoniopolitico/routes/routes.dart';
 import 'package:patrimoniopolitico/widgets/custom_drawer.dart';
 import 'package:patrimoniopolitico/provider/politicos_provider.dart';
@@ -11,9 +13,13 @@ import 'cards.dart';
 import 'models/politico_model.dart';
 
 void main() {
-  final politicosProvider = PoliticosProvider();
   //TODO: PONER PROVIDER AQUI PARA EVITAR ERROR AL CARGAR
-  runApp(MyApp());
+
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider<PoliticosProvider>(create: (context) => PoliticosProvider()),
+      ChangeNotifierProvider<GastoInfo>(create: (context) => GastoInfo()),
+    ], child: MyApp() ,));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,15 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final politicosProvider = PoliticosProvider();
-    return MultiProvider(
-      providers: [
-//        ChangeNotifierProvider<Gasto>(create: (context) => Gasto()),
-        ChangeNotifierProvider<GastoInfo>(create: (context) => GastoInfo()),
-        FutureProvider(create: (BuildContext context) => politicosProvider.cargarPoliticos()),
-//        ChangeNotifierProvider<Politico>(create: (context) => Politico()),
-      ],
-      child: MaterialApp(
+      return MaterialApp(
         title: 'Waste Money',
         initialRoute: 'home',
         routes: getApplicationRoutes(),
@@ -38,8 +36,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
 //      home: MyHomePage(title: 'Inicio'),
-      ),
-    );
+      );
+
   }
 }
 
@@ -89,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final cargarPoliticos = Provider.of<List<Politico>>(context);
+    final cargarPoliticos = Provider.of<PoliticosProvider>(context).politicos;
 
     double one_percent_screen_height =
         MediaQuery.of(context).size.height * 0.01;
@@ -139,11 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-//            Positioned(
-//              top: 21 * one_percent_screen_height,
-//              right: 4 * one_percent_screen_width,
-//              child: Icon(Icons.location_on),
-//            ),
             Positioned(
               top: 24 * one_percent_screen_height,
               left: 85 * one_percent_screen_width,
@@ -190,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
               left: one_percent_screen_width * 5,
               width: one_percent_screen_width * 90,
               height: one_percent_screen_height * 60,
-              child: _crearListado(cargarPoliticos),
+              child: _crearListado(cargarPoliticos, context),
             )
           ],
         ),
@@ -198,28 +191,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _crearListado(List<Politico> politicos) {
+  _crearListado(List<Politico> politicos, BuildContext context) {
 
-          final cantidad = politicos.length;
-          return GridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 4.0,
-            childAspectRatio: 1.0,
-            crossAxisSpacing: 4.0,
-            children: List.generate(cantidad, (index) {
-              return GestureDetector(
-                onTap: (){
-                  Navigator.pushReplacementNamed(context, 'single_item', arguments: politicos[index]);
-                },
-                child: _mostrarPoliticoCard(politicos[index]),
-              );
-            }),
-          );
+
+    final cantidad = politicos.length;
+
+    return GridView.count(
+      crossAxisCount: 2,
+      mainAxisSpacing: 4.0,
+      childAspectRatio: 1.0,
+      crossAxisSpacing: 4.0,
+      children: List.generate(cantidad, (index) {
+        return GestureDetector(
+          onTap: (){
+            Navigator.pushReplacementNamed(context, 'single_item', arguments: index);
+          },
+          child: _mostrarPoliticoCard(politicos[index], index),
+        );
+      }),
+    );
 
   }
 
-  Widget _mostrarPoliticoCard(Politico politico) {
+  Widget _mostrarPoliticoCard(Politico politico, int index) {
     return ItemCard(politico.itemImage, politico.itemName, politico.patrimonio,
-        politico.partido, politico.cargo);
+        politico.partido, politico.cargo, index);
   }
 }

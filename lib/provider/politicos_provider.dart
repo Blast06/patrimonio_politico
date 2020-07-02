@@ -55,9 +55,31 @@ class PoliticosProvider extends ChangeNotifier{
 
   }
 
-  gastarPatrimonio(int index, int cantidad, int precio) {
-    this.politicos[index].patrimonio -= (cantidad * precio);
+  gastarPatrimonio(int index, int amount, int precio) {
+
+    final int cantidad = amount + 1;
+    int totalArestar = 0;
+
+    if(cantidad < 2){
+      this.politicos[index].patrimonio -= (cantidad * precio);
+
+    } else {
+      totalArestar = (precio * cantidad) - precio * (cantidad -1);
+      this.politicos[index].patrimonio -= totalArestar;
+    }
+
     notifyListeners();
+  }
+
+  restaurarPatrimonio(int index, int amount, int precio){
+    final int cantidad = amount + 1;
+
+    int totalAsumar = 0;
+    if(amount <1 ) return;
+
+    totalAsumar = (precio * cantidad) - precio * (cantidad -1);
+    this.politicos[index].patrimonio += totalAsumar;
+
   }
 
 

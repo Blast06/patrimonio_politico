@@ -21,14 +21,14 @@ class GastoInfo with ChangeNotifier{
 
   aumentar(int index) {
 //    this.allGastos[index].cantidad++;
-    this._lista[index].cantidad++;
+    ++this._lista[index].cantidad;
 //    gasto.cantidad++;
     notifyListeners();
   }
 
   decrementar(int index) {
     if(this._lista[index].cantidad < 1) return;
-    this._lista[index].cantidad--;
+    --this._lista[index].cantidad;
 
 //    this._lista[index].cantidad = this._lista[index].cantidad == 0 ?? this._lista[index].cantidad--;
 //    this.allGastos[index].cantidad = this.allGastos[index].cantidad < 1 ? 0 : this.allGastos[index].cantidad--;

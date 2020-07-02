@@ -9,6 +9,7 @@ import 'package:patrimoniopolitico/widgets/custom_drawer.dart';
 import 'package:patrimoniopolitico/provider/politicos_provider.dart';
 import 'package:provider/provider.dart';
 
+
 import 'cards.dart';
 import 'models/politico_model.dart';
 
@@ -29,20 +30,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return MaterialApp(
-        title: 'Waste Money',
+        title: 'Politico Money',
+        debugShowCheckedModeBanner: false,
         initialRoute: 'home',
         routes: getApplicationRoutes(),
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-//      home: MyHomePage(title: 'Inicio'),
       );
 
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({ this.title});
 
   final String title;
 
@@ -132,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 width: 90 * one_percent_screen_width,
                 child: Text(
-                  'Gasta la fortuna como si fuera',
+                  'En que gastarias estas fortunas?',
                   style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
                 ),
               ),

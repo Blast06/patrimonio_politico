@@ -76,6 +76,7 @@ class _MiniCard2State extends State<MiniCard2> {
             children: <Widget>[
               GestureDetector(onTap:(){
                 //TODO: OPERACION DE GASTAR PATRIMONIO VA AQUI
+                politico.restaurarPatrimonio(widget.indexPolitico, gastos.allGastos[widget.index].cantidad, gastos.allGastos[widget.index].price);
                 gastos.decrementar(widget.index);
                 },child: Container(color: Colors.amberAccent,child: Icon(Icons.remove, color: Colors.white, size: 27))),
               Text(gastos.allGastos[widget.index].cantidad.toString(),style: GoogleFonts.openSans(textStyle: TextStyle(color: Colors.white54))),

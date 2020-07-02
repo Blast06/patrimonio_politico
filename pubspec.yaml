@@ -59,6 +59,8 @@ flutter:
   - assets/imgs/drawer.jpg
   - assets/imgs/loading.gif
   - assets/imgs/no_image_placeholder.png
+  - assets/splash2.flr
+  - assets/splash.flr
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

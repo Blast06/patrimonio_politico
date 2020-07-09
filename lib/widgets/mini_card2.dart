@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:patrimoniopolitico/models/gasto_model.dart';
-import 'package:patrimoniopolitico/models/politico_model.dart';
 import 'package:patrimoniopolitico/provider/politicos_provider.dart';
 import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
-import 'package:patrimoniopolitico/providers_state/gasto_info.dart';
-import 'package:patrimoniopolitico/providers_state/politicos.info.dart';
 import 'package:provider/provider.dart';
 
 
@@ -92,17 +88,4 @@ class _MiniCard2State extends State<MiniCard2> {
     );
   }
 
-  gastarPatrimonio(BuildContext context, int indexPolitico, int cantidad, int precio) {
-    Provider.of<Politico>(context).gastarPatrimonio(indexPolitico, cantidad, precio);
-  }
-//acciones de botones
-  restar( int index) {
-    print('prueba');
-    Provider.of<GastoInfo>(context).decrementar(index);
-  }
-
-  aumentar(Gasto gasto, int index) {
-    Provider.of<GastoInfo>(context).aumentar(index);
-
-  }
 }

@@ -9,12 +9,13 @@ class PoliticosProvider extends ChangeNotifier{
 
   final _url = 'https://patrimoniopolitico.firebaseio.com';
   final List<Politico> politicos = [];
+  bool showLoading = true;
 
 
   PoliticosProvider(){
-    print('empezo');
-    this.cargarPoliticos();
-    print('termino');
+//    print('empezo');
+//    this.cargarPoliticos();
+//    print('termino');
   }
 
   Future<bool> agregarPolitico(Politico politico) async {
@@ -51,6 +52,7 @@ class PoliticosProvider extends ChangeNotifier{
     });
     print('termino2');
     print(politicos.length);
+    showLoading = false;
     return politicos;
 
   }
